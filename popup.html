@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FormSense Settings</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --card-bg: #181b24;
+      --border: #272c3d;
+      --text-main: #e2e8f0;
+      --text-muted: #8492a6;
+      --accent: #00f2fe;
+      --accent-glow: rgba(0, 242, 254, 0.25);
+      --accent-hover: #4facfe;
+      --success: #00e676;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body {
+      width: 310px;
+      background-color: var(--bg);
+      color: var(--text-main);
+      padding: 18px 16px;
+      font-size: 13px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      color: #fff;
+    }
+
+    .logo-badge {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    .badge {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(0, 242, 254, 0.12);
+      color: var(--accent);
+      border: 1px solid rgba(0, 242, 254, 0.2);
+    }
+
+    .field-group {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    input[type="password"],
+    input[type="text"],
+    select {
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 9px 12px;
+      color: var(--text-main);
+      font-size: 12px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent-glow);
+    }
+
+    .toggle-visibility {
+      position: absolute;
+      right: 8px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 4px;
+      font-size: 11px;
+    }
+
+    .toggle-visibility:hover {
+      color: var(--text-main);
+    }
+
+    select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%238492a6' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 28px;
+    }
+
+    select option {
+      background: #181b24;
+      color: #fff;
+    }
+
+    .shortcut-tip {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin: 12px 0 14px;
+      padding: 8px 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .key-badge {
+      background: #252a38;
+      color: #cbd5e1;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-family: monospace;
+      border: 1px solid #333a4d;
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .btn-action {
+      width: 100%;
+      border-radius: 6px;
+      padding: 9px 0;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      border: none;
+    }
+
+    .btn-solve {
+      background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+      color: #0b111e;
+      box-shadow: 0 2px 10px rgba(0, 242, 254, 0.25);
+    }
+
+    .btn-save {
+      background: #202533;
+      color: #cbd5e1;
+      border: 1px solid var(--border);
+    }
+
+    .btn-action:hover {
+      opacity: 0.95;
+    }
+
+    .btn-action:active {
+      transform: scale(0.98);
+    }
+
+    .status-msg {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 500;
+      min-height: 16px;
+      line-height: 1.4;
+      transition: opacity 0.3s;
+    }
+
+    .status-msg.success {
+      color: var(--success);
+    }
+
+    .status-msg.error {
+      color: #ff5252;
+    }
+
+    .status-msg.info {
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <span class="logo-badge"></span>
+      <span>FormSense</span>
+    </div>
+    <span class="badge">Stealth MV3</span>
+  </div>
+
+  <div class="field-group">
+    <label for="apiKey">Gemini API Key</label>
+    <div class="input-wrapper">
+      <input type="password" id="apiKey" placeholder="AIzaSy..." autocomplete="off" spellcheck="false">
+      <button type="button" id="toggleKey" class="toggle-visibility" title="Show / Hide Key">👁</button>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label for="modelSelect">AI Model</label>
+    <select id="modelSelect">
+      <option value="gemini-3.8-flash" selected>gemini-3.8-flash (Recommended)</option>
+      <option value="gemini-3.5-flash-lite">gemini-3.5-flash-lite (Fastest)</option>
+      <option value="gemini-3.6-flash">gemini-3.6-flash</option>
+      <option value="gemini-2.5-flash">gemini-2.5-flash</option>
+    </select>
+  </div>
+
+  <div class="shortcut-tip">
+    <span>Solve Trigger</span>
+    <span class="key-badge">Ctrl + Shift + Y</span>
+  </div>
+
+  <div class="button-group">
+    <button type="button" id="solveNowBtn" class="btn-action btn-solve">⚡ Solve Active Google Form</button>
+    <button type="button" id="saveBtn" class="btn-action btn-save">Save Settings</button>
+  </div>
+
+  <div id="statusMsg" class="status-msg"></div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

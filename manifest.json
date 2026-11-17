@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "FormSense - Silent Quiz Solver",
+  "version": "1.0.0",
+  "description": "Quietly and accurately fills Google Forms quizzes using AI with a single keyboard shortcut.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://docs.google.com/forms/*",
+    "https://generativelanguage.googleapis.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "FormSense Settings"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://docs.google.com/forms/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "solve-form": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "MacCtrl+Shift+Y"
+      },
+      "description": "Scan and auto-fill Google Form answers"
+    }
+  }
+}
